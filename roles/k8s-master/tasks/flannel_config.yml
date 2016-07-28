@@ -1,0 +1,17 @@
+#- name: Configure subnet
+#  uri:
+#    method: PUT
+#    url: "http://localhost:2379/v2/keys/atomic01/network/config"
+#    body: "{{ lookup('file', 'flanneld-conf.json') }}"
+
+# Manually copying file and curl ot later because uri module cannot be
+# used on Atomic -> no httplib2
+- name: Copy json with network config
+  copy:
+    src: flanneld-conf.json
+    dest: /tmp/flanneld-conf.json
+  register: flannelconf
+
+- name: Configure subnet
+  command: curl -L http://localhost:2379/v2/keys/atomic01/network/config -XPUT --data-urlencode value@/tmp/flanneld-conf.json
+  when: flannelconf.changed

@@ -1,0 +1,45 @@
+- name: k8s client configuration
+  lineinfile:
+    dest: /etc/kubernetes/kubelet
+    line: KUBELET_ADDRESS="--address={{ ansible_default_ipv4.address }}"
+    regexp: "^KUBELET_ADDRESS"
+  notify: restart kubelet
+
+- name: k8s client configuration | KUBELET_HOSTNAME
+  lineinfile:
+    dest: /etc/kubernetes/kubelet
+    line: KUBELET_HOSTNAME="--hostname_override={{ ansible_default_ipv4.address }}"
+    regexp: "^KUBELET_HOSTNAME="
+  notify: restart kubelet
+
+- name: k8s client configuration | KUBELET_ARGS
+  lineinfile:
+    dest: /etc/kubernetes/kubelet
+    line: KUBELET_ARGS="--cluster_dns={{ dns_server }} --cluster_domain={{ dns_domain }}"
+    regexp: "^KUBELET_ARGS="
+  notify: restart kubelet
+  when: skydns_enable
+
+- name: k8s client configuration | KUBELET_API_SERVER
+  lineinfile:
+    dest: /etc/kubernetes/kubelet
+    line: KUBELET_API_SERVER="--api_servers=http://{{ hostvars[groups['k8s-master'][0]]['ansible_default_ipv4']['address'] }}:8080"
+    regexp: "^KUBELET_API_SERVER"
+  notify: restart kubelet
+
+- name: Configure k8s master on client | KUBE_MASTER
+  lineinfile:
+    dest: /etc/kubernetes/config
+    line: KUBE_MASTER="--master=http://{{ hostvars[groups['k8s-master'][0]]['ansible_default_ipv4']['address'] }}:8080"
+    regexp: "^KUBE_MASTER"
+  notify: restart kubelet
+
+- name: Restart and enable services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - flanneld
+    - kubelet
+    - kube-proxy

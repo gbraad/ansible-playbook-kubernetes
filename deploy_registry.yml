@@ -1,0 +1,7 @@
+---
+- name: Deploy Docker Registry
+  hosts: k8s-master
+  remote_user: centos
+  become: true
+  roles:
+    - docker-registry
