@@ -1,0 +1,38 @@
+- name: Configure Docker to use registry cache
+  lineinfile:
+    dest: /etc/sysconfig/docker
+    line: OPTIONS='--registry-mirror=http://"{{ hostvars[groups['k8s-master'][0]]['ansible_default_ipv4']['address'] }}:5000" --selinux-enabled --log-driver=journald'
+    regexp: "^OPTIONS"
+  notify: restart docker
+
+- name: Overlay | configure etcd url
+  lineinfile:
+    dest: /etc/sysconfig/flanneld
+    line: FLANNEL_ETCD="http://{{ hostvars[groups['k8s-master'][0]]['ansible_default_ipv4']['address'] }}:2379"
+    regexp: "^FLANNEL_ETCD="
+
+- name: Overlay | configure etcd config key
+  lineinfile:
+    dest: /etc/sysconfig/flanneld
+    line: FLANNEL_ETCD_KEY="/atomic01/network"
+    regexp: "^FLANNEL_ETCD_KEY="
+
+- name: Flannel systemd | create service.d
+  file:
+    path: /etc/systemd/system/docker.service.d/
+    state: directory
+
+- name: Flannel systemd | deploy unit file
+  copy:
+    src: flanneld-network.conf
+    dest: /etc/systemd/system/docker.service.d/10-flanneld-network.conf
+  notify: reload systemd-daemon
+
+- name: Enable services
+  service:
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - flanneld
+    - kubelet
+    - kube-proxy

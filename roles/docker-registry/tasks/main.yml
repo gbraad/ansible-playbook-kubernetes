@@ -1,0 +1,29 @@
+---
+- name: Create local volume and configure SELinux
+  file:
+    path: /var/lib/local-registry
+    setype: svirt_sandbox_file_t
+    state: directory
+
+- name: Deploy Docker Registry
+  docker:
+    image: "registry:2"
+    name: local-registry
+    ports: "5000:5000"
+    volumes: "/var/lib/local-registry:/srv/registry"
+    env: "STANDALONE=false"
+    env: "MIRROR_SOURCE=https://registry-1.docker.io"
+    env: "MIRROR_SOURCE_INDEX=https://index.docker.io"
+    env: "STORAGE_PATH=/srv/registry"
+
+- name: Deploy systemd unit file
+  copy:
+    dest: /etc/systemd/system/local-registry.service
+    src: local-registry.service.j2
+  notify: reload systemd
+
+- name: Enable and start local-registry service
+  service:
+    name: local-registry
+    enabled: yes
+    state: started

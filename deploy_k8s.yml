@@ -1,0 +1,14 @@
+---
+- name: Deploy k8s Master
+  hosts: k8s-master
+  remote_user: centos
+  become: true
+  roles:
+  - k8s-master
+
+- name: Deploy k8s Nodes
+  hosts: k8s-nodes
+  remote_user: centos
+  become: true
+  roles:
+  - k8s-nodes

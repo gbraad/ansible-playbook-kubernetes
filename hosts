@@ -1,0 +1,8 @@
+[k8s-nodes]
+atomic-02 ansible_ssh_host=192.168.124.145
+atomic-03 ansible_ssh_host=192.168.124.123
+atomic-04 ansible_ssh_host=192.168.124.190
+
+
+[k8s-master]
+atomic-01 ansible_ssh_host=192.168.124.116

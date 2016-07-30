@@ -1,0 +1,53 @@
+---
+- name: Configure etcd LISTEN CLIENTS
+  lineinfile:
+    dest: /etc/etcd/etcd.conf
+    line: ETCD_LISTEN_CLIENT_URLS="http://0.0.0.0:2379,http://0.0.0.0:4001"
+    regexp: "^ETCD_LISTEN_CLIENT_URLS"
+  notify: restart etcd
+
+- name: Configure etcd ADVERTISE CLIENTS
+  lineinfile:
+    dest: /etc/etcd/etcd.conf
+    line: ETCD_ADVERTISE_CLIENT_URLS="http://0.0.0.0:2379,http://0.0.0.0:4001"
+    regexp: "^ETCD_ADVERTISE_CLIENT_URLS"
+  notify: restart etcd
+
+- name: Configure k8s common services
+  lineinfile:
+    dest: /etc/kubernetes/config
+    line: KUBE_ETCD_SERVERS="--etcd_servers=http://{{ ansible_default_ipv4.address  }}:2379"
+    regexp: "^KUBE_ETCD_SERVERS"
+  notify: restart k8s
+
+- name: Configure k8s common services
+  lineinfile:
+    dest: /etc/kubernetes/config
+    line: KUBE_MASTER="--master=http://{{ ansible_default_ipv4.address }}:8080"
+    regexp: "^KUBE_MASTER"
+  notify: restart k8s
+
+- name: apiserver | listen address
+  lineinfile:
+    dest: /etc/kubernetes/apiserver
+    line: KUBE_API_ADDRESS="--address=0.0.0.0"
+    regexp: "^KUBE_API_ADDRESS"
+  notify: restart k8s
+
+- name: apiserver | admission control
+  lineinfile:
+    dest: /etc/kubernetes/apiserver
+    line: KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota"
+    regexp: "^KUBE_ADMISSION_CONTROL"
+  notify: restart k8s
+
+- name: enable services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - etcd
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
