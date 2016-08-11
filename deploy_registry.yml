@@ -4,4 +4,4 @@
   remote_user: centos
   become: true
   roles:
-    - docker-registry
+    - gbraad.docker-registry

@@ -4,11 +4,11 @@
   remote_user: centos
   become: true
   roles:
-  - k8s-master
+  - gbraad.k8s-master
 
 - name: Deploy k8s Nodes
   hosts: k8s-nodes
   remote_user: centos
   become: true
   roles:
-  - k8s-nodes
+  - gbraad.k8s-node

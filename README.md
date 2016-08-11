@@ -1,13 +1,15 @@
-Deploy k8s on Atomic Hosts using Ansible
-========================================
+Deploy k8s on hosts using Ansible
+=================================
 
-A collection of Ansible roles to deploy a k8s cluster on Atomic hosts.
+A collection of Ansible roles to deploy a k8s cluster on hosts.
 
 
 Usage
 -----
 
 ```
+$ yum install -y ansible
+$ ansible-galaxy install -r roles.txt
 $ vi hosts
 $ ansible-playbook -i hosts deploy_k8s.yml
 ```
@@ -21,6 +23,6 @@ Apache license 2.0
 Contributors
 ------------
 
-  * Vincent van der Kussen (author)
   * Gerard Braad
+  * Vincent van der Kussen
 

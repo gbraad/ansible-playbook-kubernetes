@@ -1,4 +1,0 @@
-- name: restart k8s apiserver
-  service:
-    name: kube-apiserver
-    state: restarted
