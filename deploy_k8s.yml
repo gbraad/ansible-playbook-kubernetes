@@ -4,6 +4,7 @@
   remote_user: centos
   become: true
   roles:
+  - gbraad.docker
   - gbraad.k8s-master
 
 - name: Deploy k8s Nodes
@@ -11,4 +12,5 @@
   remote_user: centos
   become: true
   roles:
+  - gbraad.docker
   - gbraad.k8s-node
