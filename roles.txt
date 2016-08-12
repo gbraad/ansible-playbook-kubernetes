@@ -1,4 +1,5 @@
-gbraad.k8s-master
-gbraad.k8s-node
 gbraad.docker
 gbraad.docker-regsitry
+gbraad.kubernetes-master
+gbraad.kubernetes-node
+

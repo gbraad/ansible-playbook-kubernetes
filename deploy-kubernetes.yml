@@ -1,16 +1,16 @@
 ---
-- name: Deploy k8s Master
+- name: Deploy kubernetes Master
   hosts: k8s-master
   remote_user: centos
   become: true
   roles:
   - gbraad.docker
-  - gbraad.k8s-master
+  - gbraad.kubernetes-master
 
-- name: Deploy k8s Nodes
+- name: Deploy kubernetes Nodes
   hosts: k8s-nodes
   remote_user: centos
   become: true
   roles:
   - gbraad.docker
-  - gbraad.k8s-node
+  - gbraad.kubernetes-node

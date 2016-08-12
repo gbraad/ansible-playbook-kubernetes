@@ -6,6 +6,7 @@ A collection of Ansible roles to deploy a k8s cluster on hosts.
 
 Usage
 -----
+At the moment 
 
 ```
 $ yum install -y ansible
@@ -23,9 +24,9 @@ Used roles
   * gbraad.docker-registry  
     [Galaxy](https://galaxy.ansible.com/gbraad/docker-registry/), [GitHub](https://github.com/gbraad/ansible-role-docker-registry) / [GitLab](https://gitlab.com/gbraad/ansible-role-docker-registry)
   * gbraad.k8s-master  
-    [Galaxy](https://galaxy.ansible.com/gbraad/k8s-master/), [GitHub](https://github.com/gbraad/ansible-role-k8s-master) / [GitLab](https://gitlab.com/gbraad/ansible-role-gitlab-server)
+    [Galaxy](https://galaxy.ansible.com/gbraad/kubernetes-master/), [GitHub](https://github.com/gbraad/ansible-role-kubernetes-master) / [GitLab](https://gitlab.com/gbraad/ansible-role-kubernetes-master)
   * gbraad.k8s-node  
-    [Galaxy](https://galaxy.ansible.com/gbraad/k8s-node/), [GitHub](https://github.com/gbraad/ansible-role-k8s-node) / [GitLab](https://gitlab.com/gbraad/ansible-role-gitlab-cirunner)
+    [Galaxy](https://galaxy.ansible.com/gbraad/kubernetes-node/), [GitHub](https://github.com/gbraad/ansible-role-kubernetes-node) / [GitLab](https://gitlab.com/gbraad/ansible-role-kubernetes-node)
 
 
 
