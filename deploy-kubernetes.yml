@@ -14,3 +14,11 @@
   roles:
   - gbraad.docker
   - gbraad.kubernetes-node
+
+- name: Install kubernetes client
+  hosts: k8s-client
+  remote_user: centos
+  become: true
+  roles:
+  - gbraad.kubernetes-client
+

@@ -2,4 +2,4 @@ gbraad.docker
 gbraad.docker-regsitry
 gbraad.kubernetes-master
 gbraad.kubernetes-node
-
+gbraad.kubernetes-client
