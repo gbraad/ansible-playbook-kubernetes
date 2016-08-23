@@ -1,0 +1,5 @@
+---
+- name: Deploy Docker
+  hosts: k8s-master
+  roles:
+    - gbraad.docker

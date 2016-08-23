@@ -37,6 +37,15 @@ Used roles
     [Galaxy](https://galaxy.ansible.com/gbraad/kubernetes-client/), [GitHub](https://github.com/gbraad/ansible-role-kubernetes-client) / [GitLab](https://gitlab.com/gbraad/ansible-role-kubernetes-client)
 
 
+Documentation
+-------------
+
+Further information about the installation can be found at:
+
+  * [Getting started with containers](https://access.redhat.com/documentation/en/red-hat-enterprise-linux-atomic-host/version-7/getting-started-with-containers/)
+  * [Getting started guide](http://www.projectatomic.io/docs/gettingstarted/) at Project Atomic
+
+
 License
 -------
 
